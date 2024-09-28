@@ -1,0 +1,10 @@
+﻿<eos-data-grid 
+    #grid name='{lowerCaseHyphenatedName}-list' 
+    [getFuncName]="getFuncName" 
+    [listService]="listService"
+    [pageId]="pageId" 
+    [detailComponent]="detailComponent" 
+    [listComponent]="this">
+</eos-data-grid>
+
+

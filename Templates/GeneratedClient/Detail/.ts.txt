@@ -1,0 +1,24 @@
+﻿import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BaseDetailComponent } from 'src/app/app-shared/components/base-detail/base-detail.component';
+
+@Component({
+  selector: 'app-{lowerCaseHyphenatedName}-detail',
+  templateUrl: './{lowerCaseHyphenatedName}-detail.component.html',
+  styleUrl: './{lowerCaseHyphenatedName}-detail.component.scss',
+  providers: [{itemname}Service]
+})
+export class {itemname}DetailComponent extends BaseDetailComponent {
+
+   constructor(detailPageService: DetailPageService
+    , public entityService: {itemname}Service
+    , public route: ActivatedRoute) {
+    super(detailPageService);
+    this.component = this;
+    this.pageId = '{newGuidId}';
+    this.detailPageService.entityService = entityService;
+    this.getFuncName = 'get';
+  }
+
+}
+
