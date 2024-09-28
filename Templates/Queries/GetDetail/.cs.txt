@@ -1,0 +1,37 @@
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using MediatR;
+using Til.Eos.Hrm.Core.Domain;
+using Til.Eos.Shared.Extensions;
+using Til.Eos.Hrm.Core.Common.Contracts;
+using Til.Eos.Hrm.Core.Application.{nameofPlural}.Models;
+
+namespace Til.Eos.Hrm.Core.Application.PMS.{nameofPlural}.Queries
+{
+    public class Get{itemname}DetailQuery : IRequest<{itemname}Model>
+    {
+        public Guid Id { get; set; }
+
+        public class Handler : IRequestHandler<Get{itemname}DetailQuery, {itemname}Model>
+        {
+            private readonly IHrmService _hrmService;
+            public Handler(IHrmService hrmService) => _hrmService = hrmService;
+
+            public async Task<{itemname}Model> Handle(Get{itemname}DetailQuery request, CancellationToken cancellationToken)
+            {
+                if (request.Id.IsEmpty()) return new {itemname}Model();
+
+                var entity = await _hrmService.Context.{nameofPlural}
+                    .FirstOrDefaultAsync(x => x.Id == request.Id);
+
+                GuardClause.ThrowNotFoundExceptionIfNull(nameof({itemname}), "{itemname} Not Found.");
+
+                var model = _hrmService.Mapper.Map<{itemname}Model>(entity);
+
+                return model;
+            }
+        }
+    }
+}

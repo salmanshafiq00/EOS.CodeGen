@@ -1,0 +1,50 @@
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Threading;
+using System.Threading.Tasks;
+using Til.Eos.Shared.Constants;
+using Til.Eos.Shared.Extensions;
+using Til.Eos.Shared.Models;
+using Til.Eos.Hrm.Core.Common.Contracts;
+using Til.Eos.Hrm.Core.Domain;
+using Til.Eos.Hrm.Core.Application.{nameofPlural}.Models;
+
+
+namespace Til.Eos.Hrm.Core.Application.{nameofPlural}.Commands
+{
+    public class Upsert{itemname}Command : {itemname}Model, IRequest<UpsertResponse>
+    {
+        public class Handler : IRequestHandler<Upsert{itemname}Command, UpsertResponse>
+        {
+            private readonly IHrmService _hrmService;
+            public Handler(IHrmService hrmService) => _hrmService = hrmService;
+
+            public async Task<UpsertResponse> Handle(Upsert{itemname}Command request, CancellationToken cancellationToken)
+            {
+                {itemname} entity;
+                string msg = string.Empty;
+
+                if (!request.Id.IsEmpty())
+                {
+                    entity = await _hrmService.Context.{nameofPlural}
+                        .FirstOrDefaultAsync(t => t.Id == request.Id);
+
+                    msg = CommonMessage.UpdateMsg;
+                }
+                else
+                {
+                    entity = new {itemname}();
+                    _hrmService.Context.{nameofPlural}.Add(entity);
+
+                    msg = CommonMessage.SaveMsg;
+                }
+
+                entity = _hrmService.Mapper.Map(request, entity);
+
+                await _hrmService.Context.SaveChangesAsync(cancellationToken);
+
+                return new UpsertResponse(request, msg);
+            }
+        }
+    }
+}

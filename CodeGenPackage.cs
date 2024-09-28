@@ -1,25 +1,19 @@
 ﻿global using System;
-global using System.Text;
 global using System.Linq;
+global using System.Text;
 using EasyPOS.CodeGen.Helpers;
-using EasyPOS.CodeGen.Models;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Threading;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.VisualStudio.Shell;
-using EnvDTE80;
-using Microsoft;
-using EnvDTE;
-using Microsoft.VisualStudio.Threading;
-using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio;
-using EasyPOS.CodeGen;
-using System.Xml.Linq;
 
 namespace EasyPOS.CodeGen;
 
@@ -46,7 +40,7 @@ public sealed class CodeGenPackage : AsyncPackage
 
     private void Execute(object sender, EventArgs e)
     {
-        var (entityName, clientPath) = PromptForFileName();
+        var (entityName, clientPath, cqrsPath) = PromptForFileName();
 
         if (string.IsNullOrEmpty(entityName))
         {
@@ -63,6 +57,34 @@ public sealed class CodeGenPackage : AsyncPackage
         {
             var nameofPlural = ProjectHelpers.Pluralize(entityName);
             var templatePath = Utility.GetTemplatesFolderPath();
+
+            // Generated Client
+            var cqrsRelativePaths = new List<string>()
+            {
+                    $"{nameofPlural}/Commands/Upsert{entityName}Command.cs",
+                    $"{nameofPlural}/Queries/GetList/Get{nameofPlural}ListQuery.cs",
+                    $"{nameofPlural}/Queries/GetDetail/Get{entityName}DetailQuery.cs",
+                    $"{nameofPlural}/Models/{entityName}ViewModel.cs"
+            };
+
+            var cqrsAbsolutePaths = new List<string>()
+            {
+                    $"{cqrsPath}/{nameofPlural}/Commands/Upsert{entityName}Command.cs",
+                    $"{cqrsPath}/{nameofPlural}/Queries/Get{nameofPlural}ListQuery.cs",
+                    $"{cqrsPath}/{nameofPlural}/Queries/Get{entityName}DetailQuery.cs",
+                    $"{cqrsPath}/{nameofPlural}/Models/{entityName}ViewModel.cs"
+            };
+
+            if (!string.IsNullOrWhiteSpace(cqrsPath))
+            {
+                foreach (var item in cqrsRelativePaths)
+                {
+                    string fileName = Path.GetFileName(item);
+                    var cqursAbsolutePath = cqrsAbsolutePaths.FirstOrDefault(x => x.Contains(fileName));
+                    AddFileAsync(entityName, cqursAbsolutePath, item).Forget();
+                }
+            }
+
             // Generated Client
             var generatedClientPages = new List<string>()
             {
@@ -84,12 +106,16 @@ public sealed class CodeGenPackage : AsyncPackage
                 $"{clientPath}/{entityName.GetLowerCaseHyphenatedName()}-detail/{entityName.GetLowerCaseHyphenatedName()}-detail.component.ts",
             ];
 
-            foreach (var item in generatedClientPages)
+            if (!string.IsNullOrWhiteSpace(clientPath)) 
             {
-                string fileName = Path.GetFileName(item);
-                var clientAbsolutePath = clientAbsolutePaths.FirstOrDefault(x => x.Contains(fileName));
-                AddFileAsync(entityName, clientAbsolutePath, item).Forget();
+                foreach (var item in generatedClientPages)
+                {
+                    string fileName = Path.GetFileName(item);
+                    var clientAbsolutePath = clientAbsolutePaths.FirstOrDefault(x => x.Contains(fileName));
+                    AddFileAsync(entityName, clientAbsolutePath, item).Forget();
+                }
             }
+
         }
         catch (Exception ex) when (!ErrorHandler.IsCriticalException(ex))
         {
@@ -110,14 +136,12 @@ public sealed class CodeGenPackage : AsyncPackage
     {
         await JoinableTaskFactory.SwitchToMainThreadAsync();
         FileInfo file;
-        FileInfo orgFile = null;
 
         Directory.CreateDirectory(Path.GetDirectoryName(clientAbsolutePath));
 
         file = new FileInfo(clientAbsolutePath);
-        orgFile = new FileInfo(templatePath);
 
-        if (!file.Exists && orgFile is not null)
+        if (!file.Exists)
         {
             int position = await WriteFileAsync(entityName, clientAbsolutePath, templatePath);
 
@@ -249,7 +273,7 @@ public sealed class CodeGenPackage : AsyncPackage
         return [.. results];
     }
 
-    private (string entityName, string clientPath) PromptForFileName()
+    private (string entityName, string clientPath, string cqrsPath) PromptForFileName()
     {
         FileNameDialog dialog = new()
         {
@@ -259,7 +283,7 @@ public sealed class CodeGenPackage : AsyncPackage
         bool? result = dialog.ShowDialog();
 
         // Return the tuple with both ComboBox and TextBox values if the dialog was confirmed, otherwise return empty strings
-        return (result.HasValue && result.Value) ? dialog.GetInputValues() : (string.Empty, string.Empty);
+        return (result.HasValue && result.Value) ? dialog.GetInputValues() : (string.Empty, string.Empty, string.Empty);
     }
 
 

@@ -1,0 +1,29 @@
+﻿﻿using AutoMapper;
+using System;
+using System.Dynamic;
+using Til.Eos.Hrm.Core.Domain;
+using Til.Eos.Shared.Contracts;
+
+namespace Til.Eos.Hrm.Core.Application.{nameofPlural}.Models
+{
+
+    public class {itemname}ViewModel
+    {
+        public {itemname}Model Model { get; set; }
+        public dynamic OptionsDataSources { get; set; } = new ExpandoObject();
+    }
+
+    public class {itemname}Model : IMapFrom<{itemname}>
+    {
+        public Guid Id { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<{itemname}, {itemname}Model>();
+
+            profile.CreateMap<{itemname}Model, {itemname}>();
+        }
+
+    }
+}
+

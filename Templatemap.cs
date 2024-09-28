@@ -30,65 +30,6 @@ internal static class TemplateMap
         _templateFiles.AddRange(Directory.GetFiles(_folder, "*" + _defaultExt, SearchOption.AllDirectories));
     }
 
-
-    //public static async Task<string> GetTemplateFilePathAsync(
-    //    string entityName,
-    //    string clientAbsolutePath,
-    //    string templatePath)
-    //{
-    //    var templatefolders = new string[]{
-    //        "GeneratedClient\\List",
-    //        "GeneratedClient\\Detail"
-    //    };
-
-    //    var extension = Path.GetExtension(clientAbsolutePath).ToLowerInvariant();
-    //    var fileName = Path.GetFileName(clientAbsolutePath);
-    //    //var safeName = name.StartsWith(".") ? name : Path.GetFileNameWithoutExtension(clientAbsolutePath);
-    //    //var relative = PackageUtilities.MakeRelative(project.GetRootFolder(), Path.GetDirectoryName(file) ?? "");
-    //    //var selectRelative = PackageUtilities.MakeRelative(project.GetRootFolder(), selectFolder ?? "");
-    //    string templateFile = null;
-    //    var list = _templateFiles.ToList();
-
-
-    //    // Look for direct file name matches
-    //    if (list.Any(f =>
-    //    {
-    //        var pattern = templatefolders
-    //            //.Where(x => relative.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0)
-    //            .First()
-    //            .Replace("\\", "\\\\");
-
-    //        var result = Regex.IsMatch(f, pattern, RegexOptions.IgnoreCase);
-    //        return result;
-
-    //    }))
-    //    {
-    //        var tmplFile = list.OrderByDescending(x => x.Length).FirstOrDefault(f =>
-    //        {
-    //            var pattern = templatefolders
-    //                //.Where(x => relative.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0)
-    //                .First()
-    //                .Replace("\\", "\\\\");
-
-    //            var result = Regex.IsMatch(f, pattern, RegexOptions.IgnoreCase);
-
-    //            if (result)
-    //            {
-    //                var fileName = Path.GetFileNameWithoutExtension(f)
-    //                      .Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries)
-    //                      .All(x => entityName.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0);
-
-    //                return fileName;
-    //            }
-    //            return false;
-    //        });
-    //        templateFile = tmplFile;
-    //    }
-    //    var template = await ReplaceTokensAsync(entityName, clientAbsolutePath, templateFile);
-
-    //    return NormalizeLineEndings(template);
-    //}
-
     public static async Task<string> GetTemplateFilePathAsync(
         string entityName,
         string clientAbsolutePath,
@@ -97,7 +38,12 @@ internal static class TemplateMap
         // Define possible template folders (relative structure)
         var templateFolders = new string[] {
             "GeneratedClient/List",
-            "GeneratedClient/Detail"
+            "GeneratedClient/Detail",
+            "Commands",
+            "Queries/GetDetail",
+            "Queries/GetList",
+            "Models",
+
         };
 
         // Get the file extension from clientAbsolutePath (e.g., .html)

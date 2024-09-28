@@ -73,6 +73,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Templates\Commands\upsert.cs.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Templates\Models\.cs.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Templates\Queries\GetList\.cs.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Templates\Queries\GetDetail\.cs.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Resource Include="Resources\AddApplicationInsights.png" />
     <Content Include="Templates\.cs.txt" />
     <Content Include="Templates\GeneratedClient\Detail\.html.txt">

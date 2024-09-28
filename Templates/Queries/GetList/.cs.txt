@@ -1,0 +1,34 @@
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using MediatR;
+using Til.Eos.Shared.Models;
+using Til.Eos.Shared.Extensions;
+using Til.Eos.Hrm.Core.Common.Contracts;
+using Til.Eos.Hrm.Core.Application.{nameofPlural}.Models;
+
+namespace Til.Eos.Hrm.Core.Application.{nameofPlural}.Queries
+{
+    public class Get{itemname}ListQuery : DataFetchModel, IRequest<ListViewModel>
+    {
+        public class Handler : IRequestHandler<Get{itemname}ListQuery, ListViewModel>
+        {
+            private readonly IHrmService _hrmService;
+            public Handler(IHrmService hrmService) => _hrmService = hrmService;
+
+            public async Task<ListViewModel> Handle(Get{itemname}ListQuery request, CancellationToken cancellationToken)
+            {
+                var query = _hrmService.Context.{nameofPlural}
+                    .AsNoTracking()
+                    .Select(x => new {itemname}Model
+                    {
+                        Id = x.Id,
+                    })
+                    .AsQueryable();
+
+                return await _hrmService.GetListViewDataAsync(query, request, cancellationToken);
+            }
+        }
+    }
+}
