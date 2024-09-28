@@ -1,4 +1,4 @@
-﻿namespace EasyPOS.CodeGen.Models;
+﻿namespace EOS.CodeGen.Models;
 
 public sealed class IntellisenseProperty
 {

@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 
 
-namespace EasyPOS.CodeGen;
+namespace EOS.CodeGen;
 public partial class FileNameDialog : Window
 {
     public FileNameDialog()

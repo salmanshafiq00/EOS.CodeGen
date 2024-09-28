@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="EasyPOS.CodeGen.34ec1012-0a92-46fa-a3bd-5bd268e0483c" Version="1.2" Language="en-US" Publisher="Salman Farsy" />
-        <DisplayName>EasyPOS.CodeGen</DisplayName>
-        <Description xml:space="preserve">Code Generation for Clean Architecture Project in .NET </Description>
-        <MoreInfo>https://github.com/salmanshafiq00/EasyPOS/tree/main/EasyPOS.CodeGen</MoreInfo>
+        <Identity Id="EOS.CodeGen.34ec1012-0a92-46fa-a3bd-5bd268e0483c" Version="1.1" Language="en-US" Publisher="Salman Farsy" />
+        <DisplayName>EOS.CodeGen</DisplayName>
+        <Description xml:space="preserve">EOS.CodeGen for generationg CQRS and Angular code againist an entity</Description>
+        <MoreInfo>https://github.com/salmanshafiq00/EOS.CodeGen</MoreInfo>
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Icon.png</PreviewImage>
-        <Tags>EasyPOS.CodeGen</Tags>
+        <Tags>EOS.CodeGen</Tags>
         <Preview>true</Preview>
     </Metadata>
     <Installation>

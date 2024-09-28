@@ -3,13 +3,13 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using EasyPOS.CodeGen.Helpers;
-using EasyPOS.CodeGen.Services;
+using EOS.CodeGen.Helpers;
+using EOS.CodeGen.Services;
 using EnvDTE;
 using EnvDTE80;
 
 
-namespace EasyPOS.CodeGen.Models;
+namespace EOS.CodeGen.Models;
 
 public static class IntellisenseParser
 {

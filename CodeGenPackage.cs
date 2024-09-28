@@ -1,7 +1,7 @@
 ﻿global using System;
 global using System.Linq;
 global using System.Text;
-using EasyPOS.CodeGen.Helpers;
+using EOS.CodeGen.Helpers;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
@@ -15,7 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace EasyPOS.CodeGen;
+namespace EOS.CodeGen;
 
 [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
 [InstalledProductRegistration(Vsix.Name, Vsix.Description, Vsix.Version, IconResourceID = 400)]

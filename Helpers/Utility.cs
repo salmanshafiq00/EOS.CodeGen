@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml.Linq;
 
-namespace EasyPOS.CodeGen.Helpers;
+namespace EOS.CodeGen.Helpers;
 
 internal static class Utility
 {

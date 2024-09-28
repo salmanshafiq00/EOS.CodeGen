@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System.Diagnostics;
 using System.IO;
 
-namespace EasyPOS.CodeGen.Helpers;
+namespace EOS.CodeGen.Helpers;
 
 public static class VSHelpers
 {

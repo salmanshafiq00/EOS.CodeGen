@@ -1,5 +1,5 @@
-﻿using EasyPOS.CodeGen.Helpers;
-using EasyPOS.CodeGen.Models;
+﻿using EOS.CodeGen.Helpers;
+using EOS.CodeGen.Models;
 using EnvDTE;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
@@ -8,7 +8,7 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Windows.Threading;
 
-namespace EasyPOS.CodeGen.Services;
+namespace EOS.CodeGen.Services;
 
 [Export(typeof(IWpfTextViewCreationListener))]
 [ContentType("csharp")]

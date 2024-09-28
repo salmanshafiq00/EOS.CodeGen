@@ -1,4 +1,4 @@
-﻿using EasyPOS.CodeGen;
+﻿using EOS.CodeGen;
 using System.Reflection;
 using System.Runtime.InteropServices;
 

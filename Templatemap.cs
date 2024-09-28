@@ -1,12 +1,12 @@
-﻿using EasyPOS.CodeGen.Helpers;
-using EasyPOS.CodeGen.Models;
+﻿using EOS.CodeGen.Helpers;
+using EOS.CodeGen.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace EasyPOS.CodeGen;
+namespace EOS.CodeGen;
 
 internal static class TemplateMap
 {
@@ -14,7 +14,7 @@ internal static class TemplateMap
     private static readonly List<string> _templateFiles = [];
     private const string _defaultExt = ".txt";
     private const string _templateDir = ".templates";
-    private const string _defaultNamespace = "EasyPOS";
+    private const string _defaultNamespace = "EOS";
     static TemplateMap()
     {
         var folder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
